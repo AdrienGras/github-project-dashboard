@@ -2,11 +2,12 @@
 
 | | |
 |---|---|
-| **Statut** | Cadrage validé en session, en attente de relecture finale |
+| **Statut** | ✅ Validée le 2026-10-15 |
 | **Date** | 2026-10-15 |
 | **Nom de code** | à définir (« le dashboard » dans ce document) |
 | **Phases suivantes** | 1. session design (recherche Dribbble → synthèse → design system → maquettes) · 2. plan d'implémentation, **rédigé une fois le design terminé** · 3. code |
-| **Maquette de référence** | `.superpowers/brainstorm/274538-1792062737/content/gantt-v1.html` (filaire : elle valide l'agencement, pas le style) |
+| **Design system** | [Suivi Client](https://claude.ai/artifact/13HKhxAcpMu96hgvz27VYx), sources dans `docs/design/design-system/` |
+| **Prototypes (flux)** | [Suivi Client · Flux](https://claude.ai/artifact/MVgRgVc4qRpbEReToXJ84y), sources dans `docs/design/flux/`. **Ils font foi sur l'UI quand ils s'écartent de ce document** (cf. `docs/HANDOFF.md`). |
 
 Légende : les décisions sans mention ont été prises explicitement en session. Celles marquées *(choix Claude)* ont été tranchées par défaut pendant le cadrage et peuvent être contestées à la relecture. Les décisions laissées au builder sont regroupées en §12.
 
@@ -199,12 +200,11 @@ Titre, type, état, dates, progression, jalon éventuel, **description** (Markdo
 
 Les deux formulaires s'ouvrent dans un **side panel**.
 
-**Bug / urgence**, parcours guidé en 5 étapes :
-1. Que se passe-t-il ? (titre court)
-2. **Impact** : *bloquant pour tous les utilisateurs* / *bloquant pour certains* / *gênant mais contournable*. Les deux premières réponses donnent une **urgence**, la troisième un **bug normal**.
-3. Où (URL ou écran, environnement prod ou recette) et depuis quand (est-ce que ça marchait avant ?)
-4. Étapes pour reproduire, résultat attendu, résultat constaté
-5. Captures ou fichiers (optionnel)
+**Bug / urgence**, parcours guidé en 4 étapes. L'impact vient en premier, et le titre n'est jamais seul à l'écran, pour que le client n'écrive pas tout dans un seul champ :
+1. **Impact** : *bloquant pour tous les utilisateurs* / *bloquant pour certains* / *gênant mais contournable*. Les deux premières réponses donnent une **urgence**, la troisième un **bug normal**.
+2. **Le problème** : en une phrase, que se passe-t-il ? (titre), où (URL ou écran, environnement prod ou recette), depuis quand, et est-ce que ça marchait avant.
+3. **Reproduction et captures** : ce qui devrait se passer, ce qui se passe à la place (deux champs de texte long), les étapes pour reproduire (facultatives), puis les captures (facultatives, avec vignette et suppression).
+4. **Récapitulatif** : relecture de la déclaration avant envoi.
 
 **Idée** : titre, besoin ou problème rencontré, bénéfice attendu, pièces jointes optionnelles *(contenu exact : choix Claude, à affiner en design)*.
 

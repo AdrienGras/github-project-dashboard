@@ -1,0 +1,30 @@
+<!-- @dsCard height=288 -->
+<style>
+  .cv { position: relative; width: 960px; height: 288px; background: var(--bg); overflow: hidden; font-family: var(--font-sans); }
+  .cv svg { position: absolute; left: 0; top: 0; }
+  .cv .a { fill: var(--active-bar); } .cv .r { fill: var(--review-bar); } .cv .d { fill: var(--done-bar); }
+  .cv .i { fill: var(--idea-bar); } .cv .p { fill: var(--planned-bar); }
+  .cv .as { fill: var(--active-strong); } .cv .rs { fill: var(--review-strong); } .cv .ds { fill: var(--done-strong); }
+  .cv .now { fill: var(--danger-strong); } .cv .ink { fill: var(--ink); }
+  .cv .txt { position: absolute; left: 40px; bottom: 36px; max-width: 440px; }
+  .cv h1 { margin: 0; font: 700 88px/0.95 var(--font-display); letter-spacing: -0.03em; color: var(--ink); }
+  .cv p { margin: 14px 0 0; font: 500 14px/20px var(--font-sans); color: var(--ink-muted); }
+</style>
+<div class="cv">
+  <!--
+    blocks: active-bar 300×44, review-bar 380×44, done-bar 240×44, idea-bar 420×44 (bleeds right), planned-bar 220×44 — rx = radius-sm (6px), progress strips 4px in *-strong
+    arrangement: staggered stack of five rows right of x=480, pitch 56px (44 + space-3), like a Gantt read top-down
+    pattern: literal motif — the timeline itself; one today line (2px, danger-strong) crossing the stack with a milestone diamond in ink, because the system exists to read where things stand today
+    scales: space-3 (12px) gaps, space-4 (16px) top inset, radius-sm 6px on bars, radius-sm on the diamond
+  -->
+  <svg width="960" height="288" viewBox="0 0 960 288" aria-hidden="true">
+    <rect class="a" x="500" y="16" width="300" height="44" rx="6"/><rect class="as" x="500" y="56" width="186" height="4"/>
+    <rect class="r" x="560" y="72" width="380" height="44" rx="6"/><rect class="rs" x="560" y="112" width="380" height="4"/>
+    <rect class="d" x="520" y="128" width="240" height="44" rx="6"/><rect class="ds" x="520" y="168" width="240" height="4"/>
+    <rect class="i" x="640" y="184" width="340" height="44" rx="6"/>
+    <rect class="p" x="590" y="240" width="220" height="44" rx="6"/>
+    <rect class="now" x="724" y="8" width="2" height="280"/>
+    <rect class="ink" x="718" y="2" width="14" height="14" rx="3" transform="rotate(45 725 9)"/>
+  </svg>
+  <div class="txt"><h1>Suivi<br>Client</h1><p>Où en sont vos sujets, lisible en un coup d'œil.</p></div>
+</div>

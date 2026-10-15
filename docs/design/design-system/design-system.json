@@ -1,0 +1,161 @@
+{
+  "v": 3,
+  "layout": "files",
+  "createdOnFiles": {
+    "v": 1,
+    "at": "2026-10-15T12:21:36Z"
+  },
+  "title": "Suivi Client",
+  "namespace": "SuiviClient",
+  "libraries": [],
+  "sections": {},
+  "groups": [
+    "Icons"
+  ],
+  "assetGroups": {
+    "Icons": {
+      "name": "Icons",
+      "tile": "s",
+      "order": [
+        "stack-2.svg",
+        "bug.svg",
+        "bulb.svg",
+        "alert-triangle.svg",
+        "calendar.svg",
+        "progress.svg",
+        "eye.svg",
+        "check.svg",
+        "clock.svg",
+        "flag.svg",
+        "x.svg",
+        "chevron-left.svg",
+        "chevron-right.svg",
+        "arrow-right.svg",
+        "plus.svg",
+        "info-circle.svg",
+        "chevron-down.svg",
+        "photo.svg"
+      ],
+      "files": {
+        "stack-2.svg": {
+          "name": "stack-2.svg",
+          "blob": "99d08d2799146761a28e3e7014ce35e6",
+          "size": 430,
+          "type": "image/svg+xml"
+        },
+        "bug.svg": {
+          "name": "bug.svg",
+          "blob": "fb53819339dbf5648e49082b7b346e07",
+          "size": 634,
+          "type": "image/svg+xml"
+        },
+        "bulb.svg": {
+          "name": "bulb.svg",
+          "blob": "2e157a4511cd78a4bb5e7f5846c02cf8",
+          "size": 513,
+          "type": "image/svg+xml"
+        },
+        "alert-triangle.svg": {
+          "name": "alert-triangle.svg",
+          "blob": "3c25386a05dc8b4323519025bceee9ba",
+          "size": 538,
+          "type": "image/svg+xml"
+        },
+        "calendar.svg": {
+          "name": "calendar.svg",
+          "blob": "725279fe64271cf10926674ef83b9177",
+          "size": 542,
+          "type": "image/svg+xml"
+        },
+        "progress.svg": {
+          "name": "progress.svg",
+          "blob": "02ee320652178214df943b87e96b3257",
+          "size": 626,
+          "type": "image/svg+xml"
+        },
+        "eye.svg": {
+          "name": "eye.svg",
+          "blob": "fb6294a0deab0473da74ddaa8bb88de8",
+          "size": 473,
+          "type": "image/svg+xml"
+        },
+        "check.svg": {
+          "name": "check.svg",
+          "blob": "84c2ef8da6f0b2ab1da70ce71ee6a4e5",
+          "size": 359,
+          "type": "image/svg+xml"
+        },
+        "clock.svg": {
+          "name": "clock.svg",
+          "blob": "404013996a21d633e6254b415d208594",
+          "size": 406,
+          "type": "image/svg+xml"
+        },
+        "flag.svg": {
+          "name": "flag.svg",
+          "blob": "9ed48903ff1045558888a5d434c08999",
+          "size": 434,
+          "type": "image/svg+xml"
+        },
+        "x.svg": {
+          "name": "x.svg",
+          "blob": "e4036cd23b708ed82e925ac1d6c5fdcc",
+          "size": 377,
+          "type": "image/svg+xml"
+        },
+        "chevron-left.svg": {
+          "name": "chevron-left.svg",
+          "blob": "c621f7d53ce5d3b750e854f29e4fb2da",
+          "size": 364,
+          "type": "image/svg+xml"
+        },
+        "chevron-right.svg": {
+          "name": "chevron-right.svg",
+          "blob": "7a30aea0a361a6193be724d08efc8ad4",
+          "size": 364,
+          "type": "image/svg+xml"
+        },
+        "arrow-right.svg": {
+          "name": "arrow-right.svg",
+          "blob": "2a33a9dbcb0c653328549ca21b21e8da",
+          "size": 411,
+          "type": "image/svg+xml"
+        },
+        "plus.svg": {
+          "name": "plus.svg",
+          "blob": "dd9003f4a49ae6c7fae2b9a80004e4f9",
+          "size": 378,
+          "type": "image/svg+xml"
+        },
+        "info-circle.svg": {
+          "name": "info-circle.svg",
+          "blob": "3bfc1d924ff620c50b202138bc67daec",
+          "size": 438,
+          "type": "image/svg+xml"
+        },
+        "chevron-down.svg": {
+          "name": "chevron-down.svg",
+          "blob": "58736d33c6b734fcd44070df0cc88896",
+          "size": 363,
+          "type": "image/svg+xml"
+        },
+        "photo.svg": {
+          "name": "photo.svg",
+          "blob": "743c3c05e969512d30beb5fcde4b5f4c",
+          "size": 562,
+          "type": "image/svg+xml"
+        }
+      }
+    }
+  },
+  "blobs": {},
+  "docs": {
+    "sections": []
+  },
+  "lastChange": {
+    "by": "AdrienGras",
+    "at": "2026-10-15T15:25:00Z",
+    "via": "Claude Code",
+    "note": "Agencement : 4 tuiles compactes en ligne, urgences dessous en pleine largeur."
+  }
+}

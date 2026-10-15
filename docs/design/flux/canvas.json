@@ -1,0 +1,27 @@
+{
+  "v": 3,
+  "createdOnFiles": {"v": 1, "at": "2026-10-15T13:45:00Z"},
+  "title": "Suivi Client · Flux",
+  "launch": {"view": "canvas", "page": "client"},
+  "pages": [
+    {"id": "client", "name": "Parcours client"},
+    {"id": "admin", "name": "Parcours admin"}
+  ],
+  "boards": {
+    "Main.dc.html": {"x": 0, "y": 0, "w": 1440, "h": 1700, "title": "Dashboard client · prototype", "page": "client", "expand": "fill", "is_interactive": true},
+    "Connexion.dc.html": {"x": 1520, "y": 0, "w": 1280, "h": 800, "title": "Invitation et connexion · prototype", "page": "client", "expand": "fill", "is_interactive": true},
+    "Mobile.dc.html": {"x": 2880, "y": 0, "w": 390, "h": 1400, "title": "Dashboard mobile", "page": "client"},
+    "Onboarding.dc.html": {"x": 0, "y": 0, "w": 1280, "h": 900, "title": "Onboarding admin · prototype", "page": "admin", "expand": "fill", "is_interactive": true},
+    "Admin.dc.html": {"x": 1360, "y": 0, "w": 1280, "h": 1000, "title": "Espace admin", "page": "admin", "expand": "fill", "is_interactive": true}
+  },
+  "order": ["Main.dc.html", "Connexion.dc.html", "Mobile.dc.html", "Onboarding.dc.html", "Admin.dc.html"],
+  "notes": {
+    "t_client": {"x": 0, "y": -300, "text": "Parcours client", "kind": "title1", "maxW": 3270, "page": "client"},
+    "howto_client": {"x": 3350, "y": 0, "w": 340, "text": "Pour tester : bouton Play sur un artboard marqué interactif.\n\nDashboard : ouvrez une ligne du Gantt, une urgence ou une idée ; déclarez un bug (essayez « Bloquant pour tous » puis « Gênant mais contournable ») ; proposez une idée ; basculez clair / sombre en haut à droite. Pour voir l'écran sans urgence : Tweaks › Scénario › aucune.\n\nConnexion : acceptez l'invitation, puis demandez un lien de connexion.", "fill": "blue", "size": "m", "page": "client"},
+    "t_admin": {"x": 0, "y": -300, "text": "Parcours admin", "kind": "title1", "maxW": 2640, "page": "admin"},
+    "howto_admin": {"x": 2720, "y": 0, "w": 340, "text": "Onboarding : 8 étapes, de la messagerie aux premières invitations. Chaque étape se valide pour passer à la suivante.\n\nEspace admin : comptes, anomalies de planification et état de la synchronisation GitHub.", "fill": "blue", "size": "m", "page": "admin"}
+  },
+  "designSystems": [
+    {"title": "Suivi Client", "namespace": "suiviclient", "artifact": "https://claude.ai/artifact/13HKhxAcpMu96hgvz27VYx", "version": "1792075607-fdf8", "copiedAt": "2026-10-15T14:50:00Z"}
+  ]
+}

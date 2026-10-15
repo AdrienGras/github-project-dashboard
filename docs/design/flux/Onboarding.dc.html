@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Onboarding admin</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme/tokens.css">
+<link rel="stylesheet" href="ds/suiviclient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..700&amp;family=Figtree:wght@400..800&amp;family=Geist+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--active-ink)}a:hover{color:var(--ink)}
+.stp{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:10px;font:600 14px/20px var(--font-sans);color:var(--ink-muted)}
+.stp b{display:grid;place-items:center;width:24px;height:24px;border-radius:999px;font:600 12px/1 var(--font-mono);background:var(--surface-muted);color:var(--ink-muted);flex:none}
+.stp.is-current{background:var(--surface);color:var(--ink);box-shadow:var(--shadow-sm)}
+.stp.is-current b{background:var(--primary);color:var(--on-primary)}
+.stp.is-done{color:var(--ink)}
+.stp.is-done b{background:var(--done-soft);color:var(--done-ink)}
+.chk{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,220px),1fr));gap:12px}
+.pick .sc-choice input{accent-color:var(--active-strong)}
+.pick .sc-choice:has(input:checked){border-color:var(--active-strong);background:var(--active-soft)}
+.pick .sc-choice:has(input:checked) span{color:var(--active-ink)}
+.pick .sc-choice:has(.sc-radio:checked) .sc-radio{background:var(--active-strong);border-color:var(--active-strong)}
+</style>
+</helmet>
+<div class="app" data-theme="{{ theme }}">
+<div class="pg" style="max-width: 1120px">
+  <header style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+    <div><span class="help">Nouvelle instance · suivi.client.fr</span><h1 style="margin: 4px 0 0; font: 700 28px/32px var(--font-display); letter-spacing: -0.02em">Mise en service</h1></div>
+    <span class="sc-badge sc-badge--planned">{{ progressLabel }}</span>
+  </header>
+  <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+    <nav aria-label="Étapes" style="flex: 1 1 240px; max-width: 280px; display: flex; flex-direction: column; gap: 2px">
+      <sc-for list="{{ steps }}" as="st" hint-placeholder-count="8"><div class="{{ st.cls }}"><b>{{ st.n }}</b>{{ st.name }}</div></sc-for>
+    </nav>
+    <section class="sc-card" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+      <div style="padding: 24px; display: flex; flex-direction: column; gap: 16px">
+
+        <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+          <h2 class="sc-card__title">Messagerie</h2>
+          <p class="help" style="font-size: 14px">Les invitations et les liens de connexion partent par email : sans messagerie, personne ne peut se connecter.</p>
+          <div class="grid2">
+            <div class="sc-field"><label class="sc-field-label" for="o-host">Serveur SMTP</label><input class="sc-input" id="o-host" value="{{ f.host }}" onChange="{{ on.host }}"></div>
+            <div class="sc-field"><label class="sc-field-label" for="o-port">Port</label><input class="sc-input" id="o-port" value="{{ f.port }}" onChange="{{ on.port }}"></div>
+            <div class="sc-field"><label class="sc-field-label" for="o-user">Identifiant</label><input class="sc-input" id="o-user" value="{{ f.user }}" onChange="{{ on.user }}"></div>
+            <div class="sc-field"><label class="sc-field-label" for="o-from">Adresse d'envoi</label><input class="sc-input" id="o-from" value="{{ f.from }}" onChange="{{ on.from }}"></div>
+          </div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+            <button class="sc-btn sc-btn--secondary" type="button" onClick="{{ sendTest }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 7a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v10a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-10z"/><path d="M3 7l9 6l9 -6"/></svg>Envoyer un email de test</button>
+            <sc-if value="{{ testOk }}" hint-placeholder-val="{{ false }}"><span class="sc-badge sc-badge--done">Email de test reçu par adrien@owlnext.fr</span></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Connexion à GitHub</h2>
+          <p class="help" style="font-size: 14px">Le dashboard crée sa propre application GitHub dans l'organisation du client. Elle reçoit les changements en temps réel et crée les déclarations.</p>
+          <div class="sc-field"><label class="sc-field-label" for="o-org">Organisation GitHub du client</label><input class="sc-input" id="o-org" value="{{ f.org }}" onChange="{{ on.org }}"></div>
+          <div class="sc-hint"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg><span>Vous devez être <b style="color: var(--ink)">propriétaire</b> de cette organisation. GitHub vous demandera de confirmer, puis vous ramènera ici.</span></div>
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+            <button class="sc-btn sc-btn--primary" type="button" onClick="{{ createApp }}">Créer l'application GitHub</button>
+            <sc-if value="{{ appOk }}" hint-placeholder-val="{{ false }}"><span class="sc-badge sc-badge--done">Application « Suivi client » installée sur {{ f.org }}</span></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Project et dépôt de suivi</h2>
+          <p class="help" style="font-size: 14px">Le Project rassemble les sujets de tous les dépôts. Le dépôt de suivi reçoit les bugs et les idées déclarés par le client.</p>
+          <div class="pick" style="display: flex; flex-direction: column; gap: 8px">
+            <span class="sc-field-label">GitHub Project</span>
+            <sc-for list="{{ projects }}" as="p" hint-placeholder-count="2"><label class="sc-choice"><input class="sc-radio" type="radio" name="proj" id="{{ p.id }}" checked="{{ p.on }}" onChange="{{ p.pick }}"><b>{{ p.name }}</b><span>{{ p.detail }}</span></label></sc-for>
+            <label class="sc-choice"><input class="sc-radio" type="radio" name="proj" id="proj-new" checked="{{ newProj }}" onChange="{{ pickNewProj }}"><b>Créer un nouveau Project</b><span>Dans l'organisation {{ f.org }}, avec les champs dont le dashboard a besoin.</span></label>
+            <sc-if value="{{ newProj }}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; padding-left: 28px"><div class="sc-field" style="flex: 1 1 240px"><label class="sc-field-label" for="o-newproj">Nom du Project</label><input class="sc-input" id="o-newproj" value="{{ f.newProject }}" onChange="{{ on.newProject }}"></div><button class="sc-btn sc-btn--primary" type="button" disabled="{{ cannotCreateProj }}" onClick="{{ createProj }}">Créer le Project</button></div></sc-if>
+          </div>
+          <div class="pick" style="display: flex; flex-direction: column; gap: 8px">
+            <span class="sc-field-label">Dépôt de suivi</span>
+            <sc-for list="{{ repos }}" as="r" hint-placeholder-count="2"><label class="sc-choice"><input class="sc-radio" type="radio" name="repo" id="{{ r.id }}" checked="{{ r.on }}" onChange="{{ r.pick }}"><b>{{ f.org }}/{{ r.name }}</b><span>{{ r.detail }}</span></label></sc-for>
+            <label class="sc-choice"><input class="sc-radio" type="radio" name="repo" id="repo-new" checked="{{ newRepo }}" onChange="{{ pickNewRepo }}"><b>Créer un nouveau dépôt</b><span>Privé et sans code, il ne sert qu'au suivi (recommandé).</span></label>
+            <sc-if value="{{ newRepo }}" hint-placeholder-val="{{ false }}"><div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; padding-left: 28px"><div class="sc-field" style="flex: 1 1 240px"><label class="sc-field-label" for="o-newrepo">Nom du dépôt</label><input class="sc-input" id="o-newrepo" value="{{ f.newRepo }}" onChange="{{ on.newRepo }}"></div><button class="sc-btn sc-btn--primary" type="button" disabled="{{ cannotCreateRepo }}" onClick="{{ createRepo }}">Créer le dépôt</button></div></sc-if>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Vérification de la structure</h2>
+          <p class="help" style="font-size: 14px">Le dashboard a besoin de types de tickets et de champs précis dans le Project.</p>
+          <div>
+            <sc-for list="{{ checks }}" as="c" hint-placeholder-count="6">
+              <div class="chk"><span style="display: flex; flex-direction: column"><span style="font: 600 14px/20px var(--font-sans)">{{ c.name }}</span><span class="help">{{ c.detail }}</span></span><span class="{{ c.badgeClass }}">{{ c.label }}</span></div>
+            </sc-for>
+          </div>
+          <sc-if value="{{ missing }}" hint-placeholder-val="{{ true }}"><div><button class="sc-btn sc-btn--primary" type="button" onClick="{{ provision }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></svg>Créer ce qui manque</button></div></sc-if>
+        </sc-if>
+
+        <sc-if value="{{ s5 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Statuts et priorités</h2>
+          <p class="help" style="font-size: 14px">Associez chaque statut du Project à l'étape que voit le client. Plusieurs statuts peuvent aller vers la même étape.</p>
+          <div>
+            <sc-for list="{{ statuses }}" as="m" hint-placeholder-count="7">
+              <div class="chk"><span style="font: 600 14px/20px var(--font-mono)">{{ m.gh }}</span><span class="sc-select" style="width: 200px"><select class="sc-input" aria-label="Étape client pour {{ m.gh }}" value="{{ m.value }}" onChange="{{ m.change }}"><option value="triage">À qualifier</option><option value="backlog">Backlog</option><option value="planifie">Planifié</option><option value="en_cours">En cours</option><option value="en_recette">En recette</option><option value="livre">Livré</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6"/></svg></span></div>
+            </sc-for>
+          </div>
+          <div class="grid2">
+            <div class="sc-field"><label class="sc-field-label" for="o-purg">Priorité « urgente »</label><span class="sc-select"><select class="sc-input" id="o-purg" value="{{ f.prioUrgent }}" onChange="{{ on.prioUrgent }}"><option value="Urgente">Urgente</option><option value="Haute">Haute</option><option value="Normale">Normale</option><option value="Basse">Basse</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6"/></svg></span></div>
+            <div class="sc-field"><label class="sc-field-label" for="o-pnorm">Priorité d'un bug normal</label><span class="sc-select"><select class="sc-input" id="o-pnorm" value="{{ f.prioNormal }}" onChange="{{ on.prioNormal }}"><option value="Urgente">Urgente</option><option value="Haute">Haute</option><option value="Normale">Normale</option><option value="Basse">Basse</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6"/></svg></span></div>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ s6 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Alertes urgences</h2>
+          <p class="help" style="font-size: 14px">Quand le client déclare une urgence, ces personnes sont prévenues tout de suite.</p>
+          <div class="sc-field"><label class="sc-field-label" for="o-assign">Assigné par défaut sur GitHub</label><input class="sc-input" id="o-assign" value="{{ f.assignee }}" onChange="{{ on.assignee }}"></div>
+          <div class="sc-field"><label class="sc-field-label" for="o-discord">Webhook Discord (facultatif)</label><input class="sc-input" id="o-discord" value="{{ f.discord }}" onChange="{{ on.discord }}" placeholder="https://discord.com/api/webhooks/…"></div>
+          <label style="display: flex; gap: 8px; align-items: center; font: 500 14px/20px var(--font-sans)"><input class="sc-check" type="checkbox" id="o-mail" checked="{{ f.mailAdmins }}" onChange="{{ toggleMail }}">Prévenir aussi les admins par email</label>
+          <div><button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" onClick="{{ testAlert }}">Envoyer une alerte de test</button> <sc-if value="{{ alertOk }}" hint-placeholder-val="{{ false }}"><span class="sc-badge sc-badge--done">Alerte reçue sur Discord</span></sc-if></div>
+        </sc-if>
+
+        <sc-if value="{{ s7 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Identité</h2>
+          <p class="help" style="font-size: 14px">Le logo et le nom s'affichent en haut du dashboard du client.</p>
+          <div class="sc-field"><label class="sc-field-label" for="o-name">Nom du client</label><input class="sc-input" id="o-name" value="{{ f.clientName }}" onChange="{{ on.clientName }}"></div>
+          <div style="display: flex; align-items: center; gap: 12px"><span class="logo" aria-hidden="true" style="width: 56px; height: 56px">{{ logoLabel }}</span><button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" onClick="{{ addLogo }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>Choisir un logo</button><span class="help">PNG ou SVG, carré, 512 px conseillés</span></div>
+        </sc-if>
+
+        <sc-if value="{{ s8 }}" hint-placeholder-val="{{ false }}">
+          <h2 class="sc-card__title">Premières invitations</h2>
+          <p class="help" style="font-size: 14px">Chaque personne reçoit un lien d'activation valable 7 jours.</p>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap"><label class="sc-field-label" for="o-inv" style="flex-basis: 100%">Adresse email</label><input class="sc-input" id="o-inv" type="email" style="flex: 1 1 240px; width: auto" value="{{ f.invite }}" onChange="{{ on.invite }}" placeholder="prenom.nom@client.fr"><button class="sc-btn sc-btn--secondary" type="button" disabled="{{ cannotInvite }}" onClick="{{ addInvite }}">Ajouter</button></div>
+          <sc-if value="{{ inviteError }}" hint-placeholder-val="{{ false }}"><p class="help" style="color: var(--danger-ink)">Saisissez une adresse email complète, par exemple prenom.nom@client.fr.</p></sc-if>
+          <div>
+            <sc-for list="{{ invites }}" as="iv" hint-placeholder-count="2"><div class="chk"><span style="font: 600 14px/20px var(--font-sans)">{{ iv.email }}</span><span class="sc-badge sc-badge--planned">Client</span></div></sc-for>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ done }}" hint-placeholder-val="{{ false }}">
+          <span class="sc-sheet__chip" style="background: var(--done-soft); color: var(--done-strong); border-color: var(--done-bar)"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></span>
+          <h2 class="sc-card__title">L'espace de {{ f.clientName }} est prêt</h2>
+          <p class="help" style="font-size: 14px">{{ inviteCount }} invitation(s) envoyée(s). La première synchronisation avec GitHub est terminée : 8 sujets, 3 bugs et 3 idées importés.</p>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px"><a class="sc-btn sc-btn--primary" href="Admin.dc.html">Aller à l'espace admin</a><a class="sc-btn sc-btn--secondary" href="Main.dc.html">Voir le dashboard client</a></div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ notDone }}" hint-placeholder-val="{{ true }}">
+        <div class="sc-sheet__foot" style="margin-top: 0; border-radius: 0 0 16px 16px">
+          <button class="sc-btn sc-btn--secondary" type="button" disabled="{{ isFirst }}" onClick="{{ prev }}">Étape précédente</button>
+          <div style="display: flex; align-items: center; gap: 12px"><sc-if value="{{ blocked }}" hint-placeholder-val="{{ false }}"><span class="help">{{ blockedHint }}</span></sc-if><button class="sc-btn sc-btn--primary" type="button" disabled="{{ blocked }}" onClick="{{ next }}">{{ nextLabel }}</button></div>
+        </div>
+      </sc-if>
+    </section>
+  </div>
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light","section":"Affichage"},"$preview":{"width":1280,"height":900}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      step: 1, testOk: false, appOk: false, provisioned: false, alertOk: false, logo: false,
+      f: { host: 'smtp.client.fr', port: '587', user: 'suivi@client.fr', from: 'Suivi client <suivi@client.fr>', org: 'client-x', project: 'Suivi client', repo: 'suivi', newProject: 'Suivi client 2026', newRepo: 'suivi-client', prioUrgent: 'Urgente', prioNormal: 'Normale', assignee: '@adrien-g', discord: '', mailAdmins: true, clientName: 'Client démo', invite: '' },
+      projects: [{ name: 'Suivi client', detail: 'Project n° 3 · 14 éléments' }, { name: 'Roadmap 2026', detail: 'Project n° 1 · 52 éléments' }],
+      repos: [{ name: 'suivi', detail: 'Privé · aucun code' }, { name: 'app-web', detail: "Privé · code de l'application" }],
+      map: { Triage: 'triage', Backlog: 'backlog', Todo: 'planifie', 'In progress': 'en_cours', 'Code review': 'en_cours', 'QA interne': 'en_recette', Done: 'livre' },
+      invites: [{ email: 'julie.martin@client.fr' }]
+    };
+  }
+  renderVals() {
+    const s = this.state;
+    const names = ['Messagerie', 'Connexion à GitHub', 'Project et dépôt', 'Structure', 'Statuts et priorités', 'Alertes urgences', 'Identité', 'Invitations'];
+    const setF = (k) => (e) => this.setState({ f: Object.assign({}, this.state.f, { [k]: e.target.value }) });
+    const on = {}; Object.keys(s.f).forEach((k) => { on[k] = setF(k); });
+    const okStep = { 1: s.testOk, 2: s.appOk, 4: s.provisioned };
+    const blocked = s.step <= 8 && okStep[s.step] === false;
+    const hints = { 1: "Envoyez d'abord un email de test.", 2: "Créez d'abord l'application.", 4: 'Créez les éléments manquants.' };
+    const checks = [
+      { name: 'Types de tickets', detail: 'Sujet, Bug, Idée, Tâche', ok: true },
+      { name: 'Champ « Priorité »', detail: 'choix unique', ok: true },
+      { name: 'Champ « Début prévu »', detail: 'date', ok: s.provisioned },
+      { name: 'Champ « Livraison prévue »', detail: 'date', ok: s.provisioned },
+      { name: 'Champ « Estimate »', detail: 'nombre, sur les tâches', ok: s.provisioned },
+      { name: 'Valeurs de priorité', detail: 'Urgente, Haute, Normale, Basse', ok: s.provisioned },
+      { name: 'Statut « Triage »', detail: 'valeur du champ Status', ok: true }
+    ].map((c) => Object.assign(c, { badgeClass: 'sc-badge sc-badge--' + (c.ok ? 'done' : 'idea'), label: c.ok ? 'Présent' : 'À créer' }));
+    const statuses = Object.keys(s.map).map((gh) => ({ gh: gh, value: s.map[gh], change: (e) => this.setState({ map: Object.assign({}, this.state.map, { [gh]: e.target.value }) }) }));
+    const done = s.step > 8;
+    const setSel = (k, v) => this.setState({ f: Object.assign({}, this.state.f, { [k]: v }) });
+    const projects = s.projects.map((p, i) => ({ id: 'proj-' + i, name: p.name, detail: p.detail, on: s.f.project === p.name, pick: () => setSel('project', p.name) }));
+    const repos = s.repos.map((r, i) => ({ id: 'repo-' + i, name: r.name, detail: r.detail, on: s.f.repo === r.name, pick: () => setSel('repo', r.name) }));
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(s.f.invite.trim());
+    return {
+      projects: projects, repos: repos,
+      newProj: s.f.project === '__new', newRepo: s.f.repo === '__new',
+      pickNewProj: () => setSel('project', '__new'), pickNewRepo: () => setSel('repo', '__new'),
+      cannotCreateProj: s.f.newProject.trim().length < 2, cannotCreateRepo: !/^[A-Za-z0-9._-]{2,}$/.test(s.f.newRepo.trim()),
+      createProj: () => { const n = this.state.f.newProject.trim(); this.setState({ projects: this.state.projects.concat([{ name: n, detail: "Créé à l'instant · champs ajoutés à l'étape suivante" }]), f: Object.assign({}, this.state.f, { project: n }) }); },
+      createRepo: () => { const n = this.state.f.newRepo.trim(); this.setState({ repos: this.state.repos.concat([{ name: n, detail: "Créé à l'instant · privé, sans code" }]), f: Object.assign({}, this.state.f, { repo: n }) }); },
+      cannotInvite: s.f.invite.trim().length === 0, inviteError: s.f.invite.trim().length > 3 && !emailOk && s.inviteTried,
+      theme: this.props.theme || 'light',
+      steps: names.map((n, i) => ({ n: i + 1 < s.step ? '✓' : String(i + 1), name: n, cls: 'stp' + (i + 1 < s.step ? ' is-done' : (i + 1 === s.step ? ' is-current' : '')) })),
+      progressLabel: done ? 'Terminé' : 'Étape ' + s.step + ' sur 8',
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, s5: s.step === 5, s6: s.step === 6, s7: s.step === 7, s8: s.step === 8, done: done, notDone: !done,
+      f: s.f, on: on,
+      sendTest: () => this.setState({ testOk: true }), testOk: s.testOk,
+      createApp: () => this.setState({ appOk: true }), appOk: s.appOk,
+      checks: checks, missing: !s.provisioned, provision: () => this.setState({ provisioned: true }),
+      statuses: statuses,
+      toggleMail: (e) => this.setState({ f: Object.assign({}, this.state.f, { mailAdmins: e.target.checked }) }),
+      testAlert: () => this.setState({ alertOk: true }), alertOk: s.alertOk,
+      addLogo: () => this.setState({ logo: true }), logoLabel: s.logo ? 'CD' : 'LOGO',
+      invites: s.invites, inviteCount: s.invites.length,
+      addInvite: () => { const v = this.state.f.invite.trim(); if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)) { this.setState({ inviteTried: true }); return; } this.setState({ inviteTried: false, invites: this.state.invites.concat([{ email: v }]), f: Object.assign({}, this.state.f, { invite: '' }) }); },
+      isFirst: s.step === 1, blocked: blocked, blockedHint: hints[s.step] || '',
+      nextLabel: s.step === 8 ? 'Envoyer les invitations' : 'Continuer',
+      next: () => { if (!blocked) this.setState({ step: this.state.step + 1 }); },
+      prev: () => this.setState({ step: Math.max(1, this.state.step - 1) })
+    };
+  }
+}
+</script>
+</body>
+</html>

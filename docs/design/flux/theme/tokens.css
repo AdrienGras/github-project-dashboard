@@ -1,0 +1,59 @@
+/* Suivi Client — variables des deux thèmes, reprises de tokens.json du design system. */
+:root, [data-theme="light"] {
+  --bg: #f6f7fb; --surface: #ffffff; --surface-muted: #eef0f6; --border: #e2e5ee; --border-strong: #c9cede; --border-control: #858ca3;
+  --ink: #161a2e; --ink-muted: #5a6178; --primary: #1b2040; --on-primary: #ffffff; --focus: #2f5bea;
+  --cta-urgent-from: #d93a40; --cta-urgent-to: #8f1530; --on-cta: #ffffff;
+  --planned-soft: #eceff5; --planned-ink: #3b4560; --planned-bar: #d5dbe8; --planned-strong: #64708f;
+  --active-soft: #e6efff; --active-ink: #1d3f91; --active-bar: #bcd3ff; --active-strong: #2a5fd6;
+  --review-soft: #f1eafe; --review-ink: #5b2a9e; --review-bar: #dcc9fb; --review-strong: #7a3ed6;
+  --done-soft: #e5f6ec; --done-ink: #17603a; --done-bar: #b9e7cb; --done-strong: #17824a;
+  --danger-soft: #fdeaea; --danger-ink: #9b1c1c; --danger-bar: #f8c4c4; --danger-strong: #c42f2f;
+  --idea-soft: #dff5f7; --idea-ink: #0b5560; --idea-bar: #a6e1e8; --idea-strong: #0d7684;
+  --warning-soft: #fff3dc; --warning-ink: #8a4b00; --warning-bar: #fbdc9f; --warning-strong: #a86a00;
+  --shadow-sm: 0 1px 2px rgba(22,26,46,0.06), 0 1px 1px rgba(22,26,46,0.04);
+  --shadow-md: 0 6px 16px -4px rgba(22,26,46,0.10), 0 2px 4px -1px rgba(22,26,46,0.06);
+  --shadow-lg: 0 24px 48px -12px rgba(22,26,46,0.22), 0 8px 16px -8px rgba(22,26,46,0.12);
+  --scrim: rgba(13,15,26,0.45);
+  color-scheme: light;
+}
+[data-theme="dark"] {
+  --bg: #0d0f1a; --surface: #151829; --surface-muted: #1c2035; --border: #272c45; --border-strong: #3a4062; --border-control: #646b90;
+  --ink: #eceef7; --ink-muted: #a3a9c2; --primary: #eceef7; --on-primary: #151829; --focus: #7c9cff;
+  --cta-urgent-from: #d93a40; --cta-urgent-to: #8f1530; --on-cta: #ffffff;
+  --planned-soft: #20253a; --planned-ink: #c4cbe0; --planned-bar: #3a4360; --planned-strong: #8d97b8;
+  --active-soft: #142a52; --active-ink: #c3d6ff; --active-bar: #234a96; --active-strong: #6f9bff;
+  --review-soft: #2a1c4a; --review-ink: #dccbff; --review-bar: #4e3290; --review-strong: #a780ff;
+  --done-soft: #12301f; --done-ink: #b5ebcb; --done-bar: #1f5c39; --done-strong: #4fcf86;
+  --danger-soft: #3a1517; --danger-ink: #ffc9c9; --danger-bar: #7a2a2e; --danger-strong: #ff6b6b;
+  --idea-soft: #0b2a30; --idea-ink: #a8ecf4; --idea-bar: #155a66; --idea-strong: #3cc8da;
+  --warning-soft: #33240a; --warning-ink: #ffd98f; --warning-bar: #6b4a12; --warning-strong: #f5b23d;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.40);
+  --shadow-md: 0 6px 16px -4px rgba(0,0,0,0.55), 0 2px 4px -1px rgba(0,0,0,0.40);
+  --shadow-lg: 0 24px 48px -12px rgba(0,0,0,0.70), 0 8px 16px -8px rgba(0,0,0,0.50);
+  --scrim: rgba(0,0,0,0.60);
+  color-scheme: dark;
+}
+:root {
+  --space-1: 4px; --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px; --space-8: 32px;
+  --radius-sm: 6px; --radius-md: 10px; --radius-lg: 16px; --radius-pill: 999px;
+  --font-display: "Bricolage Grotesque", "Figtree", system-ui, sans-serif;
+  --font-sans: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+
+/* Éléments communs aux écrans du prototype */
+.app { min-height: 100vh; background: var(--bg); color: var(--ink); font-family: var(--font-sans); }
+.pg { max-width: 1280px; margin: 0 auto; padding: 24px 16px 56px; display: flex; flex-direction: column; gap: 24px; box-sizing: border-box; }
+.rb { appearance: none; border: 0; margin: 0; font: inherit; color: inherit; text-align: left; width: 100%; background: var(--surface); cursor: pointer; }
+.rb:focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.sc-bar { border: 0; }
+.fld { display: flex; flex-direction: column; gap: 6px; }
+.inp { font: 400 14px/21px var(--font-sans); color: var(--ink); background: var(--surface); border: 1px solid var(--border-control); border-radius: var(--radius-md); padding: 8px 12px; width: 100%; box-sizing: border-box; }
+.inp:focus-visible { outline: 2px solid var(--focus); outline-offset: 1px; }
+textarea.inp { min-height: 88px; resize: vertical; }
+.help { font: 500 13px/18px var(--font-sans); color: var(--ink-muted); margin: 0; }
+.scrim { position: fixed; inset: 0; z-index: 20; background: var(--scrim); border: 0; padding: 0; cursor: pointer; }
+.sheet-fixed { position: fixed; top: 0; right: 0; bottom: 0; z-index: 21; height: 100vh; }
+.sheet-scroll { overflow-y: auto; flex: 1 1 auto; }
+.toast { position: fixed; left: 50%; bottom: 24px; transform: translateX(-50%); z-index: 30; display: flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: var(--radius-md); background: var(--primary); color: var(--on-primary); box-shadow: var(--shadow-lg); font: 600 14px/20px var(--font-sans); max-width: calc(100vw - 32px); }
+.logo { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; background: var(--surface); border: 1px dashed var(--border-control); font: 700 13px/1 var(--font-mono); color: var(--ink-muted); }

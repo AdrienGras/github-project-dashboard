@@ -1,0 +1,41 @@
+<!-- @dsCard group="Formulaires" height=900 subtitle="Clair et sombre · Champ, liste, cases et fichiers joints" -->
+<div class="sc-duo">
+<div class="sc-pane" data-theme="light"><span class="sc-pane__tag">Clair</span>
+<div class="sc-root" style="padding:20px;background:var(--bg);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="sc-field"><label class="sc-field-label" for="f-title">Que se passe-t-il ?</label><input class="sc-input" id="f-title" value="Le paiement par carte est refusé"><p class="sc-help">Une phrase courte, elle sert de titre au ticket.</p></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-empty">Depuis quand ?</label><input class="sc-input" id="f-empty" placeholder="Ex. : ce matin vers 9 h"></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-env">Environnement</label><span class="sc-select"><select class="sc-input" id="f-env"><option>Production</option><option>Recette</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6" /></svg></span><p class="sc-help">Même padding à droite qu'à gauche : le chevron ne touche jamais la bordure.</p></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-steps">Étapes pour reproduire</label><textarea class="sc-input" id="f-steps">1. Je vais sur la page de paiement
+2. Je saisis une carte valide</textarea></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <label class="sc-checkline"><input class="sc-check" type="checkbox" id="f-c1" checked>Ça fonctionnait avant</label>
+    <label class="sc-checkline"><input class="sc-check" type="checkbox" id="f-c2">Prévenir aussi les admins par email</label>
+    <label class="sc-checkline"><input class="sc-radio" type="radio" name="f-r" id="f-r1" checked>Client</label>
+    <label class="sc-checkline"><input class="sc-radio" type="radio" name="f-r" id="f-r2">Admin</label>
+    <span class="sc-field-label">Captures jointes</span>
+    <div class="sc-files"><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>erreur-paiement.png</span><button type="button" aria-label="Retirer erreur-paiement.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>console-navigateur.png</span><button type="button" aria-label="Retirer console-navigateur.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>capture-3.png</span><button type="button" aria-label="Retirer capture-3.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span></div>
+  </div>
+</div>
+</div>
+<div class="sc-pane" data-theme="dark"><span class="sc-pane__tag">Sombre</span>
+<div class="sc-root" style="padding:20px;background:var(--bg);display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;align-items:start">
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <div class="sc-field"><label class="sc-field-label" for="f-title">Que se passe-t-il ?</label><input class="sc-input" id="f-title-d" value="Le paiement par carte est refusé"><p class="sc-help">Une phrase courte, elle sert de titre au ticket.</p></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-empty">Depuis quand ?</label><input class="sc-input" id="f-empty-d" placeholder="Ex. : ce matin vers 9 h"></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-env">Environnement</label><span class="sc-select"><select class="sc-input" id="f-env-d"><option>Production</option><option>Recette</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6" /></svg></span><p class="sc-help">Même padding à droite qu'à gauche : le chevron ne touche jamais la bordure.</p></div>
+    <div class="sc-field"><label class="sc-field-label" for="f-steps">Étapes pour reproduire</label><textarea class="sc-input" id="f-steps-d">1. Je vais sur la page de paiement
+2. Je saisis une carte valide</textarea></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:14px">
+    <label class="sc-checkline"><input class="sc-check" type="checkbox" id="f-c1-d" checked>Ça fonctionnait avant</label>
+    <label class="sc-checkline"><input class="sc-check" type="checkbox" id="f-c2-d">Prévenir aussi les admins par email</label>
+    <label class="sc-checkline"><input class="sc-radio" type="radio" name="f-r-d" id="f-r1-d" checked>Client</label>
+    <label class="sc-checkline"><input class="sc-radio" type="radio" name="f-r-d" id="f-r2-d">Admin</label>
+    <span class="sc-field-label">Captures jointes</span>
+    <div class="sc-files"><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>erreur-paiement.png</span><button type="button" aria-label="Retirer erreur-paiement.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>console-navigateur.png</span><button type="button" aria-label="Retirer console-navigateur.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span><span class="sc-file"><span class="sc-thumb" aria-hidden="true"></span><span>capture-3.png</span><button type="button" aria-label="Retirer capture-3.png"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px"><path d="M18 6l-12 12" /><path d="M6 6l12 12" /></svg></button></span></div>
+  </div>
+</div>
+</div>
+</div>

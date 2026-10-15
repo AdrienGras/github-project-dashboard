@@ -1,0 +1,477 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Dashboard client</title>
+<script src="./support.js"></script>
+<link rel="stylesheet" href="theme/tokens.css">
+<link rel="stylesheet" href="ds/suiviclient/components/bundle.css">
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600..700&amp;family=Figtree:wght@400..800&amp;family=Geist+Mono:wght@500&amp;display=swap">
+<style>
+body{margin:0}
+a{color:var(--active-ink)}a:hover{color:var(--ink)}
+.grow{display:grid;grid-template-columns:280px minmax(672px,1fr)}
+.sc-gantt__name{display:block}
+.sc-gantt__cell{align-items:stretch}
+.synth{display:flex;flex-direction:column;gap:24px}
+.synth .sc-tiles{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width: 760px){.synth .sc-tiles{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width: 420px){.synth .sc-tiles{grid-template-columns:minmax(0,1fr)}}
+.profile{display:inline-flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border:1px solid var(--border);border-radius:999px;background:var(--surface);font:600 14px/20px var(--font-sans)}
+</style>
+</helmet>
+<div class="app" data-theme="{{ theme }}">
+<div class="pg">
+
+  <header style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px">
+    <div style="display: flex; align-items: center; gap: 12px">
+      <span class="logo" aria-hidden="true">LOGO</span>
+      <div style="display: flex; flex-direction: column">
+        <span style="font: 650 16px/22px var(--font-sans)">[Nom du client]</span>
+        <span class="help">Suivi de projet</span>
+      </div>
+    </div>
+    <div style="display: flex; align-items: center; gap: 8px">
+      <a class="sc-btn sc-btn--secondary sc-btn--sm" href="Admin.dc.html">Espace admin</a>
+      <button class="sc-btn sc-btn--secondary sc-btn--icon" type="button" onClick="{{ toggleTheme }}" aria-label="{{ themeLabel }}">
+        <sc-if value="{{ isLight }}" hint-placeholder-val="{{ true }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z"/></svg></sc-if>
+        <sc-if value="{{ isDark }}" hint-placeholder-val="{{ false }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0"/><path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7"/></svg></sc-if>
+      </button>
+      <span class="profile"><span style="display: grid; place-items: center; width: 32px; height: 32px; border-radius: 999px; background: var(--active-soft); color: var(--active-ink); font: 700 12px/1 var(--font-sans)">JM</span>Julie M.</span>
+    </div>
+  </header>
+
+  <section style="display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px">
+    <div>
+      <h1 style="margin: 0; font: 700 32px/36px var(--font-display); letter-spacing: -0.02em; text-wrap: balance">Bonjour Julie</h1>
+      <p class="help" style="margin-top: 6px; font-size: 14px">Voici où en sont vos sujets au 15 octobre.</p>
+    </div>
+    <div style="display: flex; flex-wrap: wrap; gap: 8px">
+      <button class="sc-btn sc-btn--urgent" type="button" onClick="{{ openBug }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>Signaler un bug / une urgence</button>
+      <button class="sc-btn sc-btn--idea" type="button" onClick="{{ openIdea }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg>Proposer une idée</button>
+    </div>
+  </section>
+
+  <section class="synth {{ synthMod }}" aria-label="Synthèse">
+  <div class="sc-tiles">
+    <div class="sc-tile sc-tile--active"><span class="sc-tile__chip"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 20.777a8.942 8.942 0 0 1 -2.48 -.969"/><path d="M14 3.223a9.003 9.003 0 0 1 0 17.554"/><path d="M4.579 17.093a8.961 8.961 0 0 1 -1.227 -2.592"/><path d="M3.124 10.5c.16 -.95 .468 -1.85 .9 -2.675l.169 -.305"/><path d="M6.907 4.579a8.954 8.954 0 0 1 3.093 -1.356"/></svg></span><div class="sc-tile__text"><span class="sc-tile__head">En cours</span><span class="sc-tile__foot">dont 1 en recette</span></div><span class="sc-tile__value">4</span></div>
+    <div class="sc-tile sc-tile--planned"><span class="sc-tile__chip"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2v-12z"/><path d="M16 3v4"/><path d="M8 3v4"/><path d="M4 11h16"/></svg></span><div class="sc-tile__text"><span class="sc-tile__head">Planifiés</span><span class="sc-tile__foot">départ le 2 nov.</span></div><span class="sc-tile__value">2</span></div>
+    <div class="sc-tile sc-tile--danger"><span class="sc-tile__chip"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg></span><div class="sc-tile__text"><span class="sc-tile__head">Urgences</span><span class="sc-tile__foot">{{ urgFoot }}</span></div><span class="sc-tile__value">{{ urgCount }}</span></div>
+    <div class="sc-tile sc-tile--done"><span class="sc-tile__chip"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg></span><div class="sc-tile__text"><span class="sc-tile__head">Livrés ce mois</span><span class="sc-tile__foot">Tableau de bord v2</span></div><span class="sc-tile__value">1</span></div>
+  </div>
+
+  <sc-if value="{{ hasUrg }}" hint-placeholder-val="{{ true }}">
+  <div class="sc-urgent" role="region" aria-label="Urgences">
+    <div class="sc-urgent__title"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg>{{ urgTitle }}</div>
+    <sc-for list="{{ urgences }}" as="u" hint-placeholder-count="1">
+      <button class="rb sc-urgent__row" type="button" onClick="{{ u.open }}">
+        <span class="sc-urgent__main"><span class="sc-urgent__name">{{ u.title }}</span><span class="sc-urgent__meta">{{ u.meta }}</span></span>
+        <span class="sc-urgent__side"><span class="sc-urgent__badges"><span class="sc-badge sc-badge--solid-danger">Urgent</span><span class="{{ u.badgeClass }}">{{ u.label }}</span></span><span class="sc-urgent__meta">{{ u.date }}</span></span>
+      </button>
+    </sc-for>
+  </div>
+  </sc-if>
+  </section>
+
+  <section class="sc-card">
+    <header class="sc-card__head">
+      <h2 class="sc-card__title">Planning des sujets</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 8px; align-items: center">
+        <div class="sc-seg" role="group" aria-label="Échelle"><button type="button" aria-pressed="false">Semaine</button><button type="button" aria-pressed="true">Mois</button><button type="button" aria-pressed="false">Trimestre</button></div>
+        <button class="sc-btn sc-btn--secondary sc-btn--icon sc-btn--sm" type="button" aria-label="Période précédente"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 6l-6 6l6 6"/></svg></button>
+        <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button">Aujourd'hui</button>
+        <button class="sc-btn sc-btn--secondary sc-btn--icon sc-btn--sm" type="button" aria-label="Période suivante"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6l-6 6"/></svg></button>
+      </div>
+    </header>
+    <div class="sc-gantt" style="display: block; overflow-x: auto; border-radius: 0 0 16px 16px">
+      <div class="grow">
+        <div class="sc-gantt__th sc-gantt__th--left">Sujet · avancement</div>
+        <div class="sc-gantt__th sc-gantt__weeks"><span><b>S40</b>28 sep</span><span><b>S41</b>5 oct</span><span class="is-now"><b>S42</b>12 oct</span><span><b>S43</b>19 oct</span><span><b>S44</b>26 oct</span><span><b>S45</b>2 nov</span><span><b>S46</b>9 nov</span><span><b>S47</b>16 nov</span><span><b>S48</b>23 nov</span><span><b>S49</b>30 nov</span><span><b>S50</b>7 déc</span><span><b>S51</b>14 déc</span></div>
+      </div>
+      <sc-for list="{{ rows }}" as="row" hint-placeholder-count="8">
+        <div class="grow">
+          <button class="rb sc-gantt__cell" type="button" onClick="{{ row.open }}" aria-label="Ouvrir le détail : {{ row.title }}">
+            <span class="sc-gantt__name">{{ row.title }}</span>
+            <span class="sc-gantt__tags">
+              <sc-if value="{{ row.isSujet }}" hint-placeholder-val="{{ true }}"><span class="sc-type sc-type--sujet"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></svg>Sujet</span></sc-if>
+              <sc-if value="{{ row.isBug }}" hint-placeholder-val="{{ false }}"><span class="sc-type sc-type--bug"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></svg>Bug</span></sc-if>
+              <span class="{{ row.badgeClass }}">{{ row.label }}</span>
+              <sc-if value="{{ row.hasSlip }}" hint-placeholder-val="{{ false }}"><span class="sc-badge" style="background: var(--warning-soft); color: var(--warning-ink)">{{ row.slipBadge }}</span></sc-if>
+            </span>
+            <span class="sc-gantt__sub"><span class="sc-mini"><i style="{{ row.miniStyle }}"></i></span>{{ row.sub }}</span>
+          </button>
+          <div class="sc-gantt__track">
+            <div class="sc-today" style="left: 20.2%"></div>
+            <sc-if value="{{ row.hasSlip }}" hint-placeholder-val="{{ false }}"><div class="sc-ghost" style="{{ row.ghostStyle }}"></div><span class="sc-slipchip" style="{{ row.chipStyle }}">{{ row.slipLabel }}</span></sc-if>
+            <button class="{{ row.barClass }}" type="button" style="{{ row.barStyle }}" onClick="{{ row.open }}">{{ row.barLabel }}</button>
+            <sc-if value="{{ row.hasOverdue }}" hint-placeholder-val="{{ false }}"><div class="sc-overdue" style="{{ row.overdueStyle }}"></div></sc-if>
+            <sc-if value="{{ row.hasMilestone }}" hint-placeholder-val="{{ false }}"><div class="sc-milestone" style="{{ row.msStyle }}" title="Mise en prod v3 · 18 déc."></div></sc-if>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </section>
+
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr)); gap: 24px; align-items: start">
+    <section class="sc-card">
+      <header class="sc-card__head"><h2 class="sc-card__title">Non planifié</h2><span class="sc-num" style="color: var(--ink-muted)">{{ npCount }}</span></header>
+      <div class="sc-list">
+        <sc-for list="{{ nonPlanned }}" as="it" hint-placeholder-count="3">
+          <button class="rb sc-item" type="button" onClick="{{ it.open }}">
+            <span class="sc-item__body"><span class="sc-item__title">{{ it.title }}</span>
+              <span class="sc-item__line">
+                <sc-if value="{{ it.isBug }}" hint-placeholder-val="{{ true }}"><span class="sc-type sc-type--bug"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></svg>Bug</span></sc-if>
+                <sc-if value="{{ it.isSujet }}" hint-placeholder-val="{{ false }}"><span class="sc-type sc-type--sujet"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></svg>Sujet</span></sc-if>
+                <span class="sc-item__meta">{{ it.meta }}</span>
+              </span>
+            </span>
+            <span class="{{ it.badgeClass }}">{{ it.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+    <section class="sc-card">
+      <header class="sc-card__head"><h2 class="sc-card__title">Idées</h2><span class="sc-num" style="color: var(--ink-muted)">{{ ideaCount }}</span></header>
+      <div class="sc-list">
+        <sc-for list="{{ ideas }}" as="it" hint-placeholder-count="3">
+          <button class="rb sc-item" type="button" onClick="{{ it.open }}">
+            <span class="sc-item__body"><span class="sc-item__title">{{ it.title }}</span>
+              <span class="sc-item__line"><span class="sc-type sc-type--idee"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg>Idée</span><span class="sc-item__meta">{{ it.meta }}</span></span>
+            </span>
+            <span class="{{ it.badgeClass }}">{{ it.label }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </section>
+  </div>
+</div>
+
+<sc-if value="{{ panelOpen }}" hint-placeholder-val="{{ false }}"><button class="scrim" type="button" aria-label="Fermer le panneau" onClick="{{ close }}"></button></sc-if>
+
+<sc-if value="{{ isDetail }}" hint-placeholder-val="{{ false }}">
+  <aside class="sc-sheet sheet-fixed" aria-labelledby="dt-title">
+    <div class="sc-sheet__head">
+      <div class="sc-sheet__top">
+        <span class="sc-sheet__chip" style="{{ d.chipStyle }}">
+          <sc-if value="{{ d.isSujet }}" hint-placeholder-val="{{ true }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></svg></sc-if>
+          <sc-if value="{{ d.isBug }}" hint-placeholder-val="{{ false }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></svg></sc-if>
+          <sc-if value="{{ d.isIdee }}" hint-placeholder-val="{{ false }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg></sc-if>
+        </span>
+        <button class="sc-btn sc-btn--ghost sc-btn--icon sc-btn--sm" type="button" aria-label="Fermer" onClick="{{ close }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+      </div>
+      <h2 class="sc-sheet__title" id="dt-title">{{ d.title }}</h2>
+      <div style="display: flex; flex-wrap: wrap; gap: 6px">
+        <sc-if value="{{ d.isSujet }}" hint-placeholder-val="{{ true }}"><span class="sc-type sc-type--sujet"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-8 4l8 4l8 -4l-8 -4"/><path d="M4 12l8 4l8 -4"/><path d="M4 16l8 4l8 -4"/></svg>Sujet</span></sc-if>
+        <sc-if value="{{ d.isBug }}" hint-placeholder-val="{{ false }}"><span class="sc-type sc-type--bug"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></svg>Bug</span></sc-if>
+        <sc-if value="{{ d.isIdee }}" hint-placeholder-val="{{ false }}"><span class="sc-type sc-type--idee"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg>Idée</span></sc-if>
+        <span class="{{ d.badgeClass }}">{{ d.label }}</span>
+        <sc-if value="{{ d.hasSlip }}" hint-placeholder-val="{{ false }}"><span class="sc-badge" style="background: var(--warning-soft); color: var(--warning-ink)">{{ d.slipBadge }}</span></sc-if>
+      </div>
+    </div>
+    <div class="sc-sheet__body sheet-scroll">
+      <div style="display: flex; flex-direction: column">
+        <sc-for list="{{ d.facts }}" as="f" hint-placeholder-count="3">
+          <div style="display: flex; justify-content: space-between; gap: 16px; padding: 8px 0; border-bottom: 1px solid var(--border)"><span class="help">{{ f.k }}</span><span style="font: 600 14px/20px var(--font-sans); text-align: right">{{ f.v }}</span></div>
+        </sc-for>
+      </div>
+      <sc-if value="{{ d.hasProgress }}" hint-placeholder-val="{{ true }}">
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span class="sc-field-label">Avancement</span>
+          <div style="height: 8px; border-radius: 8px; background: var(--surface-muted); overflow: hidden"><div style="{{ d.progressStyle }}"></div></div>
+          <span class="help">{{ d.progressText }}</span>
+        </div>
+      </sc-if>
+      <div style="display: flex; flex-direction: column; gap: 6px">
+        <span class="sc-field-label">Description</span>
+        <p style="margin: 0; font: 400 14px/21px var(--font-sans); white-space: pre-line">{{ d.desc }}</p>
+      </div>
+      <sc-if value="{{ d.hasFiles }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="sc-field-label">Captures jointes</span>
+          <div class="sc-files">
+            <sc-for list="{{ d.files }}" as="fl" hint-placeholder-count="1">
+              <figure style="margin: 0; display: flex; flex-direction: column; gap: 4px; width: 120px">
+                <span class="sc-thumb sc-thumb--lg" role="img" aria-label="Aperçu de {{ fl.name }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width: 22px; height: 22px"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg></span>
+                <figcaption class="help" style="font-size: 12px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ fl.name }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{ d.hasComments }}" hint-placeholder-val="{{ false }}">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <span class="sc-field-label">Suivi de l'équipe</span>
+          <sc-for list="{{ d.comments }}" as="c" hint-placeholder-count="2">
+            <div style="padding: 10px 12px; border-radius: 10px; background: var(--surface-muted); display: flex; flex-direction: column; gap: 4px">
+              <span class="help"><b style="color: var(--ink)">{{ c.who }}</b> · {{ c.when }}</span>
+              <span style="font: 400 14px/21px var(--font-sans)">{{ c.text }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </sc-if>
+    </div>
+    <div class="sc-sheet__foot"><span></span><button class="sc-btn sc-btn--secondary" type="button" onClick="{{ close }}">Fermer</button></div>
+  </aside>
+</sc-if>
+
+<sc-if value="{{ isBug }}" hint-placeholder-val="{{ false }}">
+  <aside class="sc-sheet sheet-fixed" aria-labelledby="bug-title-h">
+    <div class="sc-sheet__head">
+      <div class="sc-sheet__top">
+        <span class="sc-sheet__chip"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 9v-1a3 3 0 0 1 6 0v1"/><path d="M8 9h8a6 6 0 0 1 1 3v3a5 5 0 0 1 -10 0v-3a6 6 0 0 1 1 -3"/><path d="M3 13l4 0"/><path d="M17 13l4 0"/><path d="M12 20l0 -6"/><path d="M4 19l3.35 -2"/><path d="M20 19l-3.35 -2"/><path d="M4 7l3.75 2.4"/><path d="M20 7l-3.75 2.4"/></svg></span>
+        <button class="sc-btn sc-btn--ghost sc-btn--icon sc-btn--sm" type="button" aria-label="Fermer" onClick="{{ close }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+      </div>
+      <h2 class="sc-sheet__title" id="bug-title-h">Signaler un bug ou une urgence</h2>
+      <p class="sc-sheet__desc">{{ bugSubtitle }}</p>
+      <div class="sc-steps"><span>{{ stepLabel }}</span><div class="sc-steps__bars"><sc-for list="{{ stepItems }}" as="st" hint-placeholder-count="5"><i class="{{ st.cls }}"></i></sc-for></div></div>
+    </div>
+    <div class="sc-sheet__body sheet-scroll">
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}">
+        <span class="sc-field-label">Quel est l'impact pour vos utilisateurs ?</span>
+        <label class="sc-choice"><input class="sc-radio" type="radio" name="impact" id="i-all" checked="{{ impAll }}" onChange="{{ pickAll }}"><b>Bloquant pour tous</b><span>Plus personne ne peut utiliser la fonctionnalité.</span></label>
+        <label class="sc-choice"><input class="sc-radio" type="radio" name="impact" id="i-some" checked="{{ impSome }}" onChange="{{ pickSome }}"><b>Bloquant pour certains</b><span>Une partie des utilisateurs ou des cas est bloquée.</span></label>
+        <label class="sc-choice"><input class="sc-radio" type="radio" name="impact" id="i-work" checked="{{ impWork }}" onChange="{{ pickWork }}"><b>Gênant mais contournable</b><span>On peut continuer à travailler autrement.</span></label>
+        <sc-if value="{{ isUrgent }}" hint-placeholder-val="{{ false }}"><div class="sc-hint"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--danger-strong)"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg><span>Ce choix déclare une <b style="color: var(--ink)">urgence</b> : l'équipe est alertée dès l'envoi.</span></div></sc-if>
+        <sc-if value="{{ isNormal }}" hint-placeholder-val="{{ false }}"><div class="sc-hint"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12a9 9 0 1 0 18 0a9 9 0 0 0 -18 0"/><path d="M12 9h.01"/><path d="M11 12h1v4h1"/></svg><span>Ce bug sera étudié avec les autres sujets. Il apparaîtra dans « Non planifié ».</span></div></sc-if>
+      </sc-if>
+      <sc-if value="{{ s2 }}" hint-placeholder-val="{{ false }}">
+        <div class="sc-field"><label class="sc-field-label" for="b-title">En une phrase, que se passe-t-il ?</label><input class="sc-input" id="b-title" value="{{ bug.title }}" onChange="{{ onTitle }}" placeholder="Ex. : le paiement par carte est refusé"><p class="help">Elle servira de titre au ticket. Les détails se remplissent juste en dessous, puis à l'étape suivante.</p></div>
+        <div class="sc-field"><label class="sc-field-label" for="b-where">Où ? (adresse de la page ou nom de l'écran)</label><input class="sc-input" id="b-where" value="{{ bug.where }}" onChange="{{ onWhere }}" placeholder="Ex. : /paiement, ou « écran de paiement »"></div>
+        <div class="sc-field"><label class="sc-field-label" for="b-env">Environnement</label><span class="sc-select"><select class="sc-input" id="b-env" value="{{ bug.env }}" onChange="{{ onEnv }}"><option value="Production">Production</option><option value="Recette">Recette</option></select><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6l6 -6"/></svg></span></div>
+        <div class="sc-field"><label class="sc-field-label" for="b-since">Depuis quand ?</label><input class="sc-input" id="b-since" value="{{ bug.since }}" onChange="{{ onSince }}" placeholder="Ex. : ce matin vers 9 h"></div>
+        <label class="sc-checkline"><input class="sc-check" type="checkbox" id="b-worked" checked="{{ bug.worked }}" onChange="{{ onWorked }}">Ça fonctionnait avant</label>
+      </sc-if>
+      <sc-if value="{{ s3 }}" hint-placeholder-val="{{ false }}">
+        <div class="sc-field"><label class="sc-field-label" for="b-exp">Ce qui devrait se passer</label><textarea class="sc-input" id="b-exp" value="{{ bug.expected }}" onChange="{{ onExpected }}" placeholder="Ex. : le paiement est accepté et la commande confirmée."></textarea></div>
+        <div class="sc-field"><label class="sc-field-label" for="b-act">Ce qui se passe à la place</label><textarea class="sc-input" id="b-act" value="{{ bug.actual }}" onChange="{{ onActual }}" placeholder="Ex. : le message « Transaction refusée » s'affiche, quelle que soit la carte."></textarea></div>
+        <div class="sc-field"><label class="sc-field-label" for="b-steps">Étapes pour reproduire (facultatif)</label><textarea class="sc-input" id="b-steps" value="{{ bug.steps }}" onChange="{{ onSteps }}" placeholder="1. Je vais sur…&#10;2. Je clique sur…"></textarea></div>
+        <span class="sc-field-label">Captures ou fichiers (facultatif)</span>
+        <div style="border: 1.5px dashed var(--border-control); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center">
+          <svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width: 24px; height: 24px; color: var(--ink-muted)"><path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2 -2v-2"/><path d="M7 9l5 -5l5 5"/><path d="M12 4l0 12"/></svg>
+          <span class="help">Glissez vos captures ici, ou</span>
+          <button class="sc-btn sc-btn--secondary sc-btn--sm" type="button" onClick="{{ addFile }}">Ajouter une capture</button>
+        </div>
+        <sc-if value="{{ hasBugFiles }}" hint-placeholder-val="{{ false }}">
+          <div class="sc-files">
+            <sc-for list="{{ bugFiles }}" as="fl" hint-placeholder-count="1">
+              <span class="sc-file"><span class="sc-thumb" aria-hidden="true"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg></span><span>{{ fl.name }}</span><button type="button" aria-label="Retirer {{ fl.name }}" onClick="{{ fl.remove }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="width: 14px; height: 14px"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button></span>
+            </sc-for>
+          </div>
+        </sc-if>
+      </sc-if>
+      <sc-if value="{{ s4 }}" hint-placeholder-val="{{ false }}">
+        <span class="sc-field-label">Vérifiez avant d'envoyer</span>
+        <sc-for list="{{ recap }}" as="r" hint-placeholder-count="5">
+          <div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-bottom: 1px solid var(--border)"><span class="help">{{ r.k }}</span><span style="font: 500 14px/20px var(--font-sans); white-space: pre-line; overflow-wrap: anywhere">{{ r.v }}</span></div>
+        </sc-for>
+        <span class="sc-field-label" style="margin-top: 4px">Captures</span>
+        <sc-if value="{{ hasBugFiles }}" hint-placeholder-val="{{ false }}">
+          <div class="sc-files">
+            <sc-for list="{{ bugFiles }}" as="fl" hint-placeholder-count="1">
+              <figure style="margin: 0; display: flex; flex-direction: column; gap: 4px; width: 72px">
+                <span class="sc-thumb" role="img" aria-label="Aperçu de {{ fl.name }}" style="width: 72px; height: 52px"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 8h.01"/><path d="M3 6a3 3 0 0 1 3 -3h12a3 3 0 0 1 3 3v12a3 3 0 0 1 -3 3h-12a3 3 0 0 1 -3 -3v-12z"/><path d="M3 16l5 -5c.928 -.893 2.072 -.893 3 0l5 5"/><path d="M14 14l1 -1c.928 -.893 2.072 -.893 3 0l3 3"/></svg></span>
+                <figcaption class="help" style="font-size: 11px; line-height: 14px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">{{ fl.name }}</figcaption>
+              </figure>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ noBugFiles }}" hint-placeholder-val="{{ true }}"><p class="help">Aucune capture jointe. Vous pouvez en ajouter à l'étape précédente.</p></sc-if>
+        <sc-if value="{{ isUrgent }}" hint-placeholder-val="{{ false }}"><div class="sc-hint"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true" style="color: var(--danger-strong)"><path d="M12 9v4"/><path d="M10.363 3.591l-8.106 13.534a1.914 1.914 0 0 0 1.636 2.871h16.214a1.914 1.914 0 0 0 1.636 -2.87l-8.106 -13.536a1.914 1.914 0 0 0 -3.274 0z"/><path d="M12 16h.01"/></svg><span>À l'envoi, l'équipe est alertée et l'urgence apparaît en haut de votre tableau de bord.</span></div></sc-if>
+      </sc-if>
+    </div>
+    <div class="sc-sheet__foot">
+      <sc-if value="{{ s1 }}" hint-placeholder-val="{{ true }}"><button class="sc-btn sc-btn--ghost" type="button" onClick="{{ close }}">Annuler</button></sc-if>
+      <sc-if value="{{ notS1 }}" hint-placeholder-val="{{ false }}"><button class="sc-btn sc-btn--secondary" type="button" onClick="{{ prev }}">Étape précédente</button></sc-if>
+      <button class="sc-btn sc-btn--primary" type="button" disabled="{{ cannotNext }}" onClick="{{ next }}">{{ nextLabel }}</button>
+    </div>
+  </aside>
+</sc-if>
+
+<sc-if value="{{ isIdea }}" hint-placeholder-val="{{ false }}">
+  <aside class="sc-sheet sheet-fixed" aria-labelledby="idea-h">
+    <div class="sc-sheet__head">
+      <div class="sc-sheet__top">
+        <span class="sc-sheet__chip" style="background: var(--idea-soft); color: var(--idea-strong); border-color: var(--idea-bar)"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 12h1m8 -9v1m8 8h1m-15.4 -6.4l.7 .7m12.1 -.7l-.7 .7"/><path d="M9 16a5 5 0 1 1 6 0a3.5 3.5 0 0 0 -1 3a2 2 0 0 1 -4 0a3.5 3.5 0 0 0 -1 -3"/><path d="M9.7 17l4.6 0"/></svg></span>
+        <button class="sc-btn sc-btn--ghost sc-btn--icon sc-btn--sm" type="button" aria-label="Fermer" onClick="{{ close }}"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></svg></button>
+      </div>
+      <h2 class="sc-sheet__title" id="idea-h">Proposer une idée</h2>
+      <p class="sc-sheet__desc">Votre idée rejoint la zone « Idées ». Nous l'affinerons ensemble avant de la planifier.</p>
+    </div>
+    <div class="sc-sheet__body sheet-scroll">
+      <div class="sc-field"><label class="sc-field-label" for="id-title">Votre idée en une phrase</label><input class="sc-input" id="id-title" value="{{ idea.title }}" onChange="{{ onIdeaTitle }}" placeholder="Ex. : exporter les factures en PDF"></div>
+      <div class="sc-field"><label class="sc-field-label" for="id-need">Quel besoin ou quel problème ?</label><textarea class="sc-input" id="id-need" value="{{ idea.need }}" onChange="{{ onIdeaNeed }}" placeholder="Ce qui vous manque aujourd'hui, et dans quelle situation."></textarea></div>
+      <div class="sc-field"><label class="sc-field-label" for="id-ben">Ce que ça changerait pour vous</label><textarea class="sc-input" id="id-ben" value="{{ idea.benefit }}" onChange="{{ onIdeaBenefit }}" placeholder="Temps gagné, erreurs évitées, utilisateurs concernés…"></textarea></div>
+    </div>
+    <div class="sc-sheet__foot">
+      <button class="sc-btn sc-btn--ghost" type="button" onClick="{{ close }}">Annuler</button>
+      <button class="sc-btn sc-btn--primary" type="button" disabled="{{ cannotSendIdea }}" onClick="{{ sendIdea }}">Envoyer l'idée</button>
+    </div>
+  </aside>
+</sc-if>
+
+<sc-if value="{{ hasToast }}" hint-placeholder-val="{{ false }}">
+  <div class="toast" role="status"><svg class="sc-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12l5 5l10 -10"/></svg>{{ toast }}</div>
+</sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"theme":{"editor":"enum","options":["light","dark"],"default":"light","section":"Affichage"},"urgences":{"editor":"enum","options":["avec","aucune"],"default":"avec","section":"Scénario"},"$preview":{"width":1440,"height":1700}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { theme: null, panel: null, detailId: null, step: 1, bug: this.emptyBug(), idea: { title: '', need: '', benefit: '' }, extraUrg: [], extraNp: [], extraIdeas: [], toast: '', seq: 1 };
+  }
+  emptyBug() { return { title: '', impact: '', where: '', env: 'Production', since: '', worked: true, steps: '', expected: '', actual: '', files: [] }; }
+
+  baseRows() {
+    return [
+      { id: 'r1', title: 'Tableau de bord v2', type: 'sujet', kind: 'done', label: 'Livré', sub: '100 % · 6/6 · 2 oct.', p: 100, left: 0, width: 6, barLabel: 'Livré', mini: 'done-strong', start: '22 sept.', end: '2 oct.', desc: "Nouvelle page d'accueil avec les indicateurs de ventes du mois et le suivi des commandes.\nLivrée et en production depuis le 2 octobre." },
+      { id: 'r2', title: 'Import CSV clients', type: 'sujet', kind: 'late', label: 'En retard', sub: '80 % · 4/5 · 10 oct.', p: 80, left: 1.2, width: 13.1, barLabel: '80 %', mini: 'danger-strong', overdue: { left: 14.3, width: 5.9 }, start: '29 sept.', end: '10 oct.', desc: "Importer la liste des clients depuis un fichier CSV, avec un contrôle des doublons avant validation.\nIl reste le rapport d'erreurs d'import à terminer." },
+      { id: 'r3', title: 'Recherche globale', type: 'sujet', kind: 'review', label: 'En recette', sub: '100 % · 6/6 · 18 oct.', p: 100, left: 2.4, width: 21.4, barLabel: 'En recette', mini: 'review-strong', start: '30 sept.', end: '18 oct.', desc: "Une barre de recherche unique pour retrouver un client, une commande ou une facture.\nDisponible en recette : vos retours sont attendus avant la mise en production." },
+      { id: 'r4', title: 'Espace documents et partage sécurisé', type: 'sujet', kind: 'active', label: 'En cours', sub: '62 % · 5/8 · 30 oct.', p: 62, left: 8.3, width: 29.8, barLabel: 'En cours · 62 %', mini: 'active-strong', slip: { left: 8.3, width: 21.4, days: 7 }, start: '5 oct.', end: '30 oct.', committed: '23 oct.', desc: "Un espace pour déposer et partager des documents avec vos clients, avec des liens à durée limitée.\nLa livraison a été décalée d'une semaine pour ajouter le chiffrement des fichiers, validé ensemble le 9 octobre." },
+      { id: 'r5', title: 'Export comptable en double', type: 'bug', kind: 'active', label: 'En cours', sub: '50 % · 1/2 · 22 oct.', p: 50, left: 15.5, width: 10.7, barLabel: '50 %', mini: 'active-strong', start: '13 oct.', end: '22 oct.', desc: "Certaines écritures apparaissent deux fois dans l'export comptable mensuel.", comments: [ { who: 'Équipe technique', when: '13 oct.', text: "Reproduit : le problème vient des avoirs saisis le dernier jour du mois." }, { who: 'Équipe technique', when: '14 oct.', text: "Correctif en cours. Les exports déjà générés seront régénérés automatiquement." } ] },
+      { id: 'r6', title: 'SSO Microsoft', type: 'sujet', kind: 'active', label: 'En cours', sub: '25 % · 1/4 · 20 nov.', p: 25, left: 16.7, width: 46.4, barLabel: 'En cours · 25 %', mini: 'active-strong', start: '12 oct.', end: '20 nov.', desc: "Connexion avec les comptes Microsoft de votre entreprise, sans mot de passe supplémentaire." },
+      { id: 'r7', title: 'Notifications email', type: 'sujet', kind: 'planned', label: 'Planifié', sub: '0 % · 0/3 · 2 nov.', p: 0, left: 41.7, width: 11.9, barLabel: 'Planifié', mini: 'planned-strong', start: '2 nov.', end: '12 nov.', desc: "Un email récapitulatif quand une commande change de statut." },
+      { id: 'r8', title: "Refonte de l'onboarding", type: 'sujet', kind: 'planned', label: 'Planifié', sub: '0 % · 0/5 · ◆ 18 déc.', p: 0, left: 58.3, width: 36, barLabel: 'Planifié', mini: 'planned-strong', milestone: 96.4, start: '16 nov.', end: '18 déc.', desc: "Nouveau parcours de premiers pas pour vos utilisateurs, avec une visite guidée.\nJalon : mise en production de la v3 le 18 décembre." }
+    ];
+  }
+  baseUrg() {
+    return [ { id: 'u1', title: 'Paiement par carte refusé en production', meta: 'Déclarée par Julie M. · il y a 40 min', kind: 'danger', label: 'En qualification', date: '', type: 'bug', start: '15 oct., 9 h 12', desc: "Depuis ce matin, tous les paiements par carte échouent avec le message « Transaction refusée ».\nOù : écran de paiement, en production.", files: [{ name: 'erreur-paiement.png' }, { name: 'console-navigateur.png' }], comments: [ { who: 'Équipe technique', when: 'il y a 25 min', text: "Prise en compte. Nous reproduisons le problème sur l'environnement de recette." } ] } ];
+  }
+  baseNp() {
+    return [
+      { id: 'n1', type: 'bug', title: 'Affichage cassé sur Safari mobile quand on ouvre une facture depuis la liste', meta: 'Déclaré par Marc D. · 13 oct.', badge: 'planned', label: 'Backlog', desc: "Sur iPhone, la facture s'affiche tronquée à droite quand on l'ouvre depuis la liste des factures.", files: [{ name: 'facture-iphone.png' }] },
+      { id: 'n2', type: 'sujet', title: 'Tableau de bord des ventes par région', meta: 'En attente de planification', badge: 'planned', label: 'Backlog', desc: "Afficher les ventes par région, avec une comparaison au mois précédent." },
+      { id: 'n3', type: 'bug', title: 'Faute de frappe sur la page de contact', meta: 'Corrigé le 11 oct.', badge: 'done', label: 'Corrigé', desc: "« Adresse » était écrit « Adrese » dans le formulaire de contact." }
+    ];
+  }
+  baseIdeas() {
+    return [
+      { id: 'i1', title: 'Export PDF des factures', meta: 'Proposée par Marc D. · hier', badge: 'idea', label: 'Proposée', desc: "Pouvoir télécharger chaque facture en PDF pour l'envoyer au service comptable." },
+      { id: 'i2', title: "Mode sombre pour l'espace client", meta: 'Affinée en réunion le 8 oct.', badge: 'planned', label: 'En réflexion', desc: "Proposer un thème sombre pour les utilisateurs qui travaillent tard.\nAffinage du 8 octobre : à prévoir après la refonte de l'onboarding." },
+      { id: 'i3', title: 'Application mobile native', meta: 'Écartée le 1er oct. · raison dans le détail', badge: 'planned', label: 'Écartée', desc: "Une application iOS et Android.\nÉcartée le 1er octobre : le site mobile couvre les besoins identifiés ; nous en reparlerons si l'usage mobile dépasse 40 %." }
+    ];
+  }
+
+  detailFor(id, all) {
+    const it = all[id];
+    if (!it) return { title: '', typeLabel: '', badgeClass: '', label: '', facts: [], desc: '', comments: [], hasComments: false, hasProgress: false };
+    const type = it.type || 'idee';
+    const chip = { sujet: 'background: var(--active-soft); color: var(--active-strong); border-color: var(--active-bar)', bug: 'background: var(--danger-soft); color: var(--danger-strong); border-color: var(--danger-bar)', idee: 'background: var(--idea-soft); color: var(--idea-strong); border-color: var(--idea-bar)' }[type];
+    const facts = [];
+    if (it.start) facts.push({ k: it.end ? 'Début prévu' : 'Déclarée le', v: it.start });
+    if (it.end) facts.push({ k: 'Livraison prévue', v: it.end });
+    if (it.committed) facts.push({ k: 'Date initiale', v: it.committed });
+    if (it.meta) facts.push({ k: 'Origine', v: it.meta });
+    const comments = it.comments || [];
+    return {
+      title: it.title, isSujet: type === 'sujet', isBug: type === 'bug', isIdee: type === 'idee', chipStyle: chip,
+      typeLabel: { sujet: 'Sujet', bug: 'Bug', idee: 'Idée' }[type], badgeClass: it.badgeClass, label: it.label, facts: facts,
+      hasProgress: typeof it.p === 'number', progressStyle: 'height: 100%; width: ' + it.p + '%; background: var(--' + (it.mini || 'active-strong') + ')', progressText: it.sub || '',
+      desc: it.desc || '', comments: comments, hasComments: type === 'bug' && comments.length > 0,
+      hasSlip: !!it.slip, slipBadge: it.slip ? 'Décalé de ' + it.slip.days + ' j' : '',
+      files: it.files || [], hasFiles: !!(it.files && it.files.length)
+    };
+  }
+
+  renderVals() {
+    const s = this.state;
+    const theme = s.theme || this.props.theme || 'light';
+    const open = (id) => () => this.setState({ panel: 'detail', detailId: id });
+    const all = {};
+    const rows = this.baseRows().map((r) => {
+      const v = Object.assign({}, r, {
+        isSujet: r.type === 'sujet', isBug: r.type === 'bug',
+        badgeClass: 'sc-badge sc-badge--' + (r.kind === 'late' ? 'danger' : r.kind), barClass: 'sc-bar sc-bar--' + r.kind,
+        barStyle: 'left:' + r.left + '%;width:' + r.width + '%;--p:' + r.p + '%', miniStyle: 'width:' + r.p + '%;background:var(--' + r.mini + ')',
+        hasOverdue: !!r.overdue, overdueStyle: r.overdue ? 'left:' + r.overdue.left + '%;width:' + r.overdue.width + '%' : '',
+        hasSlip: !!r.slip, ghostStyle: r.slip ? 'left:' + r.slip.left + '%;width:' + r.slip.width + '%' : '', chipStyle: 'left:' + (r.left + r.width) + '%',
+        slipLabel: r.slip ? '+' + r.slip.days + ' j' : '', slipBadge: r.slip ? 'Décalé de ' + r.slip.days + ' j' : '',
+        hasMilestone: typeof r.milestone === 'number', msStyle: typeof r.milestone === 'number' ? 'left:' + r.milestone + '%' : '', open: open(r.id)
+      });
+      all[r.id] = v; return v;
+    });
+    const baseUrg = this.props.urgences === 'aucune' ? [] : this.baseUrg();
+    const urgences = s.extraUrg.concat(baseUrg).map((u) => { const v = Object.assign({}, u, { badgeClass: 'sc-badge sc-badge--' + u.kind, open: open(u.id) }); all[u.id] = v; return v; });
+    const nonPlanned = s.extraNp.concat(this.baseNp()).map((n) => { const v = Object.assign({}, n, { isBug: n.type === 'bug', isSujet: n.type === 'sujet', badgeClass: 'sc-badge sc-badge--' + n.badge, open: open(n.id) }); all[n.id] = v; return v; });
+    const ideas = s.extraIdeas.concat(this.baseIdeas()).map((i) => { const v = Object.assign({}, i, { type: 'idee', badgeClass: 'sc-badge sc-badge--' + i.badge, open: open(i.id) }); all[i.id] = v; return v; });
+
+    const b = s.bug;
+    const setBug = (patch) => this.setState({ bug: Object.assign({}, this.state.bug, patch) });
+    const val = (key) => (e) => setBug({ [key]: e.target.value });
+    const isUrgent = b.impact === 'all' || b.impact === 'some';
+    const names = ['Impact', 'Le problème', 'Reproduction et captures', 'Récapitulatif'];
+    const can = [b.impact !== '', b.title.trim().length > 2 && b.where.trim().length > 0, b.actual.trim().length > 0, true][s.step - 1];
+    const impactText = { all: 'Bloquant pour tous', some: 'Bloquant pour certains', work: 'Gênant mais contournable' }[b.impact] || '';
+    const toast = (msg) => { this.setState({ toast: msg }); clearTimeout(this._t); this._t = setTimeout(() => this.setState({ toast: '' }), 4000); };
+
+    const submitBug = () => {
+      const n = this.state.seq; const bb = this.state.bug;
+      const urgent = bb.impact === 'all' || bb.impact === 'some';
+      const desc = bb.actual + (bb.expected ? '\nAttendu : ' + bb.expected : '') + '\nOù : ' + bb.where + ' (' + bb.env + ')' + (bb.since ? ', depuis ' + bb.since : '') + (bb.steps ? '\n\nÉtapes :\n' + bb.steps : '');
+      if (urgent) {
+        this.setState({ extraUrg: [{ id: 'xu' + n, title: bb.title, meta: "Déclarée par vous · à l'instant", kind: 'danger', label: 'En qualification', date: '', type: 'bug', start: "15 oct., à l'instant", desc: desc, files: bb.files, comments: [] }].concat(this.state.extraUrg) });
+        toast("Urgence déclarée : l'équipe est alertée.");
+      } else {
+        this.setState({ extraNp: [{ id: 'xn' + n, type: 'bug', title: bb.title, meta: "Déclaré par vous · à l'instant", badge: 'planned', label: 'À qualifier', desc: desc, files: bb.files }].concat(this.state.extraNp) });
+        toast('Bug déclaré. Il apparaît dans « Non planifié ».');
+      }
+      this.setState({ seq: n + 1, panel: null, step: 1, bug: this.emptyBug() });
+    };
+    const ib = s.idea;
+    const setIdea = (patch) => this.setState({ idea: Object.assign({}, this.state.idea, patch) });
+
+    return {
+      theme: theme, isLight: theme === 'light', isDark: theme === 'dark',
+      themeLabel: theme === 'light' ? 'Passer en thème sombre' : 'Passer en thème clair',
+      toggleTheme: () => this.setState({ theme: theme === 'light' ? 'dark' : 'light' }),
+      rows: rows, urgences: urgences, nonPlanned: nonPlanned, ideas: ideas,
+      urgCount: urgences.length, urgTitle: urgences.length + (urgences.length > 1 ? ' urgences' : ' urgence'),
+      urgFoot: urgences.length ? 'en qualification' : 'aucune urgence ouverte', npCount: nonPlanned.length, ideaCount: ideas.length,
+      hasUrg: urgences.length > 0, synthMod: urgences.length > 0 ? '' : 'no-urg',
+      openBug: () => this.setState({ panel: 'bug' }), openIdea: () => this.setState({ panel: 'idea' }),
+      close: () => this.setState({ panel: null }), noSubmit: (e) => e.preventDefault(),
+      panelOpen: !!s.panel, isDetail: s.panel === 'detail', isBug: s.panel === 'bug', isIdea: s.panel === 'idea',
+      d: this.detailFor(s.detailId, all),
+      bug: b, bugSubtitle: "Commencez par l'impact, puis décrivez ce qui ne fonctionne pas, en quatre étapes.",
+      hasBugFiles: b.files.length > 0,
+      bugFiles: b.files.map((fl, i) => ({ name: fl.name, remove: () => setBug({ files: this.state.bug.files.filter((x, j) => j !== i) }) })),
+      stepItems: names.map((x, i) => ({ cls: i + 1 < s.step ? 'is-done' : (i + 1 === s.step ? 'is-current' : '') })),
+      stepLabel: 'Étape ' + s.step + ' sur 4 · ' + names[s.step - 1],
+      s1: s.step === 1, s2: s.step === 2, s3: s.step === 3, s4: s.step === 4, notS1: s.step !== 1,
+      onTitle: val('title'), onWhere: val('where'), onEnv: val('env'), onSince: val('since'), onSteps: val('steps'), onExpected: val('expected'), onActual: val('actual'),
+      onWorked: (e) => setBug({ worked: e.target.checked }),
+      impAll: b.impact === 'all', impSome: b.impact === 'some', impWork: b.impact === 'work',
+      pickAll: () => setBug({ impact: 'all' }), pickSome: () => setBug({ impact: 'some' }), pickWork: () => setBug({ impact: 'work' }),
+      isUrgent: isUrgent, isNormal: b.impact === 'work',
+      addFile: () => { const n = (this.state.fileSeq || 0) + 1; this.setState({ fileSeq: n }); setBug({ files: this.state.bug.files.concat([{ name: 'capture-' + n + '.png' }]) }); },
+      recap: [
+        { k: 'Impact', v: impactText + (isUrgent ? ' · urgence' : ' · bug normal') },
+        { k: 'Ce qui se passe', v: b.title },
+        { k: 'Où', v: b.where + ' · ' + b.env },
+        { k: 'Depuis quand', v: (b.since || 'non précisé') + (b.worked ? ' · ça fonctionnait avant' : " · n'a jamais fonctionné") },
+        { k: 'Ce qui devrait se passer', v: b.expected || 'non précisé' },
+        { k: 'Ce qui se passe à la place', v: b.actual },
+        { k: 'Étapes pour reproduire', v: b.steps || 'non précisées' }
+      ],
+      noBugFiles: b.files.length === 0,
+      cannotNext: !can, nextLabel: s.step < 4 ? 'Continuer' : 'Envoyer la déclaration',
+      next: () => { if (!can) return; if (this.state.step < 4) this.setState({ step: this.state.step + 1 }); else submitBug(); },
+      prev: () => this.setState({ step: Math.max(1, this.state.step - 1) }),
+      idea: ib, onIdeaTitle: (e) => setIdea({ title: e.target.value }), onIdeaNeed: (e) => setIdea({ need: e.target.value }), onIdeaBenefit: (e) => setIdea({ benefit: e.target.value }),
+      cannotSendIdea: ib.title.trim().length < 3,
+      sendIdea: () => {
+        const n = this.state.seq; const ii = this.state.idea;
+        this.setState({ extraIdeas: [{ id: 'xi' + n, title: ii.title, meta: "Proposée par vous · à l'instant", badge: 'idea', label: 'Proposée', desc: (ii.need || '') + (ii.benefit ? '\n\nCe que ça changerait : ' + ii.benefit : '') }].concat(this.state.extraIdeas), seq: n + 1, panel: null, idea: { title: '', need: '', benefit: '' } });
+        toast('Idée envoyée. Elle apparaît dans « Idées ».');
+      },
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+}
+</script>
+</body>
+</html>

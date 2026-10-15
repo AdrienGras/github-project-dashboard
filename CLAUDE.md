@@ -13,5 +13,6 @@ Dashboard client branché sur GitHub Projects. Le client voit un Gantt de ses su
 - **Langue** : tout est en français, l'interface comme la documentation. Vouvoiement, aucun jargon GitHub dans l'interface client.
 - **Stack retenue** : Rust + Loco (version figée), React + Vite + shadcn/ui, SQLite en WAL, volume `/data` unique, image GHCR.
 - **Design system** : les tokens sont dans `docs/design/design-system/tokens.json` (clair et sombre, contrastes AA vérifiés), les classes des composants dans `components/bundle.css`, et les icônes viennent de Tabler (`@tabler/icons-react`).
+- **Front** : les tokens viennent de `tokens.json` et alimentent les variables de thème de shadcn. On part des composants shadcn et on les adapte (Gantt, zone urgences et dépôt de captures sont les seuls composants propres). Les icônes sont Tabler, partout. Chaque écran est validé contre son prototype, en clair et en sombre. Règles complètes : `docs/HANDOFF.md`, « Règles pour le front ».
 - **Prototypes** : `docs/design/flux/*.dc.html` sont des copies des artboards du canvas. Le canvas en ligne fait foi : https://claude.ai/artifact/MVgRgVc4qRpbEReToXJ84y
 - `.superpowers/` (brouillons de brainstorming) et `.playwright-mcp/` sont ignorés par git.

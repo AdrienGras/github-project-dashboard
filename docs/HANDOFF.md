@@ -70,6 +70,34 @@ Le titre n'est jamais seul dans une étape. Le sous-titre du panneau reste fixe.
 
 **Champs** (composant Field) : liste avec un chevron qui ne touche pas la bordure, cases et radios dessinées par le design system. Dans le code, le menu déroulant natif est remplacé par le Select de shadcn (point jugé non bloquant par l'UX).
 
+## Règles pour le front (à respecter dans le plan et le code)
+
+1. **Une seule source pour les tokens.** `docs/design/design-system/tokens.json` est transformé en variables CSS, une valeur claire et une valeur sombre. Ces variables alimentent **les variables de thème de shadcn** (`--background`, `--foreground`, `--card`, `--primary`, `--border`, `--input`, `--ring`, `--radius`…) et les familles du design system (`planned`, `active`, `review`, `done`, `danger`, `idea`, `warning` × `soft` / `ink` / `bar` / `strong`), exposées dans Tailwind. Aucune couleur, aucun rayon, aucune ombre ne s'écrit en dur dans un composant.
+2. **On part des composants shadcn et on les adapte, sans rien recoder de ce qui existe** :
+
+   | Besoin | Composant shadcn de départ | Adaptation |
+   |---|---|---|
+   | Boutons | Button | variantes `urgent` (dégradé) et `idea`, tailles `sm` et `icon` |
+   | Pastilles d'état et étiquettes de type | Badge | une variante par famille d'état, une variante `type` à contour |
+   | Tuiles, cartes | Card | StatTile compacte construite sur Card |
+   | Side panel (détail, bug, idée, invitation) | Sheet | en-tête avec pastille, pied fixe |
+   | Confirmation (désactivation) | AlertDialog | bouton destructif |
+   | Champs | Input, Textarea, Label, Form | — |
+   | Listes déroulantes | Select (Radix) | remplace le `<select>` natif des prototypes |
+   | Cases et radios | Checkbox, RadioGroup | cartes de choix pour l'impact |
+   | Échelle du Gantt, onglets | ToggleGroup, Tabs | — |
+   | Toasts | Sonner | — |
+   | Infobulles (jalons) | Tooltip | — |
+   | Indicateur d'étapes, mini-barres | Progress | — |
+
+   Les seuls composants **propres** au projet sont ceux que shadcn n'a pas : le **Gantt**, la **zone urgences** et le **dépôt de captures** (vignettes avec suppression). Ils sont construits sur les primitives ci-dessus et les tokens.
+3. **Icônes Tabler** (`@tabler/icons-react`) partout, y compris à l'intérieur des composants shadcn, qui importent Lucide par défaut (chevron du Select, coche de Checkbox, croix de Sheet et Dialog) : on remplace ces imports.
+4. **Validation contre les maquettes.** Chaque écran a pour référence son artboard dans le canvas (`docs/design/flux/` et https://claude.ai/artifact/MVgRgVc4qRpbEReToXJ84y). La tâche du plan qui livre un écran ne se termine que lorsque :
+   - une capture Playwright de l'écran, à la même largeur que l'artboard, **en clair et en sombre**, a été comparée côte à côte avec le prototype : agencement, hiérarchie, états, libellés ;
+   - les interactions du prototype fonctionnent (ouverture des panneaux, étapes du formulaire, toasts…) ;
+   - un contrôle d'accessibilité automatique (axe) ne remonte aucune erreur de contraste ni de libellé ;
+   - les écarts assumés sont listés dans la tâche, pour qu'Adrien ou l'UX les valide.
+
 ## Points ouverts, à trancher avant de coder
 
 - ⏳ Date d'extinction de Plane.
